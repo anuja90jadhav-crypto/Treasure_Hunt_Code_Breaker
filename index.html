@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Treasure Hunt: Code Breaker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Treasure Hunt home"><span class="brand-icon">✦</span> TREASURE<span>BYTE</span></a>
+    <div class="top-actions">
+      <span class="status-pill"><i></i> SYSTEM ONLINE</span>
+      <button id="soundBtn" class="icon-button" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="intro">
+      <div class="eyebrow"><span class="eyebrow-line"></span> THE DIGITAL EXPEDITION</div>
+      <h1>Crack the code.<br><span>Claim the treasure.</span></h1>
+      <p class="intro-copy">A secret vault is waiting to be unlocked. Follow the clues, trust your logic, and discover the hidden code before your attempts run out.</p>
+      <div class="intro-stats">
+        <div><strong>03</strong><span>DIFFICULTY LEVELS</span></div>
+        <div><strong>∞</strong><span>WAYS TO THINK</span></div>
+        <div><strong>01</strong><span>HIDDEN TREASURE</span></div>
+      </div>
+      <div class="treasure-art" aria-hidden="true">
+        <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+        <div class="spark spark-a">✦</div><div class="spark spark-b">✧</div>
+        <div class="chest"><div class="chest-lid"></div><div class="chest-body"><span class="lock">◆</span></div><div class="chest-band"></div></div>
+        <div class="art-caption">THE VAULT OF THE UNKNOWN <span>◆</span></div>
+      </div>
+    </section>
+
+    <section class="game-panel">
+      <div class="panel-heading">
+        <div><span class="section-kicker">MISSION CONTROL</span><h2 id="panelTitle">Initialize your mission</h2></div>
+        <span class="level-badge" id="levelBadge">NOT STARTED</span>
+      </div>
+
+      <div id="setupScreen">
+        <label class="field-label" for="playerName">EXPLORER NAME</label>
+        <input id="playerName" class="text-input" maxlength="18" placeholder="Enter your codename..." value="Explorer" />
+        <div class="field-label difficulty-label">SELECT DIFFICULTY</div>
+        <div class="difficulty-grid">
+          <button class="difficulty-card selected" data-level="easy"><span class="diff-symbol">◈</span><strong>Easy</strong><small>4 digits · 8 attempts</small><span class="diff-multiplier">×1 SCORE</span></button>
+          <button class="difficulty-card" data-level="medium"><span class="diff-symbol">⬡</span><strong>Medium</strong><small>4 digits · 6 attempts</small><span class="diff-multiplier">×2 SCORE</span></button>
+          <button class="difficulty-card" data-level="hard"><span class="diff-symbol">✧</span><strong>Hard</strong><small>5 digits · 6 attempts</small><span class="diff-multiplier">×3 SCORE</span></button>
+        </div>
+        <div class="rules-note"><span>ⓘ</span><p><strong>Mission brief</strong><br>Every digit is unique. Feedback tells you how close you are. Use hints wisely—they cost 50 points.</p></div>
+        <button id="startBtn" class="primary-button">START EXPEDITION <span>↗</span></button>
+      </div>
+
+      <div id="gameScreen" class="hidden">
+        <div class="metrics">
+          <div class="metric"><span>ATTEMPTS LEFT</span><strong id="attemptsLeft">8</strong><div class="progress-track"><div id="attemptProgress" class="progress-fill"></div></div></div>
+          <div class="metric"><span>CURRENT SCORE</span><strong id="currentScore">0 <small>PTS</small></strong></div>
+          <div class="metric"><span>HINTS USED</span><strong id="hintsUsed">0</strong></div>
+        </div>
+        <div class="code-display" id="codeDisplay" aria-label="Your code guess">
+          <span class="code-slot">?</span><span class="code-slot">?</span><span class="code-slot">?</span><span class="code-slot">?</span>
+        </div>
+        <label for="guessInput" class="field-label">ENTER YOUR CODE</label>
+        <div class="guess-row"><input id="guessInput" class="text-input guess-input" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="e.g. 2846" /><button id="guessBtn" class="primary-button guess-button">DECODE ↗</button></div>
+        <div class="helper-row"><span>↳ Unique digits only</span><button id="hintBtn" class="text-button">✧ Request a hint <span>(−50 pts)</span></button></div>
+        <div id="feedback" class="feedback neutral" aria-live="polite">Your mission begins now. Make your first guess.</div>
+        <div class="history-heading"><span>ATTEMPT LOG</span><span id="historyCount">0 ENTRIES</span></div>
+        <div id="history" class="history"><div class="empty-history">Your guesses will appear here.</div></div>
+        <button id="quitBtn" class="secondary-button">ABORT MISSION</button>
+      </div>
+
+      <div id="resultScreen" class="hidden result-screen">
+        <div id="resultIcon" class="result-icon">🏆</div>
+        <div class="section-kicker">MISSION REPORT</div>
+        <h3 id="resultTitle">Vault unlocked!</h3>
+        <p id="resultMessage"></p>
+        <div class="result-code" id="resultCode">1234</div>
+        <div class="result-stats"><div><span>POINTS EARNED</span><strong id="finalScore">0</strong></div><div><span>GUESSES USED</span><strong id="finalAttempts">0</strong></div></div>
+        <button id="playAgainBtn" class="primary-button">PLAY AGAIN ↗</button>
+      </div>
+    </section>
+
+    <aside class="side-panel">
+      <div class="side-card">
+        <div class="side-title"><span class="tiny-icon">✧</span><h3>MISSION INTEL</h3></div>
+        <div class="intel-item"><span class="intel-number">01</span><div><strong>Exact match</strong><p>Right digit, right position.</p></div><span class="intel-demo exact-demo">●</span></div>
+        <div class="intel-item"><span class="intel-number">02</span><div><strong>Misplaced</strong><p>Right digit, wrong position.</p></div><span class="intel-demo misplaced-demo">◐</span></div>
+        <div class="intel-item"><span class="intel-number">03</span><div><strong>Stay sharp</strong><p>No repeated digits allowed.</p></div><span class="intel-demo">⌁</span></div>
+      </div>
+      <div class="side-card leaderboard-card">
+        <div class="side-title"><span class="tiny-icon">♛</span><h3>HALL OF FAME</h3></div>
+        <div id="leaderboard" class="leaderboard"><div class="empty-history">Your best runs will be listed here.</div></div>
+        <button id="clearScoresBtn" class="text-button clear-button">Clear local scores</button>
+      </div>
+      <div class="quote-card"><span>“</span><p>The greatest treasure is a mind that never stops questioning.</p><small>— THE EXPLORER'S CODE</small></div>
+    </aside>
+  </main>
+  <footer><span>© 2026 TREASUREBYTE</span><span>BUILT FOR CURIOUS MINDS <b>◆</b></span><span>THINK · DECODE · DISCOVER</span></footer>
+  <script src="script.js"></script>
+</body>
+</html>
